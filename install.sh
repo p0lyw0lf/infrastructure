@@ -15,7 +15,7 @@ install_service() {
   cd "$dir"
 }
 
-install_service p0lyw0lf/crossposter
+# install_service p0lyw0lf/crossposter
 install_service p0lyw0lf/girl.technology
 install_service p0lyw0lf/github_webhook_watcher
 
