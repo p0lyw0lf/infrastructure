@@ -18,8 +18,8 @@ class Repository:
     """
     remote: Optional[str]
     """
-    The script to run after an update occurs
-    Set to `None` to not run anything
+    The script to run after an update occurs. Path is relative to `local`.
+    Set to `None` to not run anything.
     """
     after_update: Optional[Path]
 
@@ -33,24 +33,24 @@ REPOSITORIES: dict[str, Repository] = {
         Path("..") / "crossposter",
         "main",
         None,
-        Path(".") / "after.sh",
+        Path("after.sh"),
     ),
     "p0lyw0lf/girl.technology": Repository(
         Path("..") / "girl.technology",
         "main",
         None,
-        Path(".") / "after.sh",
+        Path("after.sh"),
     ),
     "p0lyw0lf/github_webhook_watcher": Repository(
         Path("."),
         "main",
         None,
-        Path(".") / "after.sh",
+        Path("after.sh"),
     ),
     "p0lyw0lf/infrastructure": Repository(
         Path("..") / "infrastructure",
         "main",
         None,
-        Path(".") / "after.sh",
+        Path("after.sh"),
     ),
 }
