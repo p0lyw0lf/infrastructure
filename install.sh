@@ -4,6 +4,7 @@ dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
 sudo ln -s "$dir/nginx/girl.technology.conf" /etc/nginx/sites-enabled/girl.technology
 # Have to use copy, permissions too lax otherwise
 sudo cp "$dir/sudoers.d/github_webhook_watcher" /etc/sudoers.d/github_webhook_watcher
+sudo cp "$dir/sudoers.d/girl.technology" /etc/sudoers.d/girl.technology
 
 install_service() {
   echo "### Installing $1..."
