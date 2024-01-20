@@ -47,4 +47,10 @@ REPOSITORIES: dict[str, Repository] = {
         None,
         Path(".") / "after.sh",
     ),
+    "p0lyw0lf/infrastructure": Repository(
+        Path("..") / "infrastructure",
+        "main",
+        None,
+        Path(".") / "after.sh",
+    ),
 }
