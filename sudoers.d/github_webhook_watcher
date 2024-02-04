@@ -2,3 +2,5 @@
 
 bot-github_webhook_watcher ALL = (root) NOPASSWD: /usr/bin/systemctl daemon-reload
 bot-github_webhook_watcher ALL = (root) NOPASSWD: /usr/bin/systemctl restart *
+bot-github_webhook_watcher ALL = (root) NOPASSWD: /usr/bin/systemctl start *
+bot-github_webhook_watcher ALL = (root) NOPASSWD: /usr/bin/systemctl stop *
