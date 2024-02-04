@@ -22,6 +22,11 @@ class Repository:
     Set to `None` to not run anything.
     """
     after_update: Optional[Path]
+    """
+    The script to run after a release occurs
+    Set to `None` to not run anything
+    """
+    after_release: Optional[Path]
 
 
 """
@@ -30,27 +35,31 @@ Maps repository remotes to configurations. Formatted like
 """
 REPOSITORIES: dict[str, Repository] = {
     "p0lyw0lf/crossposter": Repository(
-        Path("..") / "crossposter",
-        "main",
-        None,
-        Path("after.sh"),
+        local=Path("..") / "crossposter",
+        branch="main",
+        remote=None,
+        after_update=None,
+        after_release=Path("after.sh"),
     ),
     "p0lyw0lf/girl.technology": Repository(
-        Path("..") / "girl.technology",
-        "main",
-        None,
-        Path("after.sh"),
+        local=Path("..") / "girl.technology",
+        branch="main",
+        remote=None,
+        after_update=None,
+        after_release=Path("after.sh"),
     ),
     "p0lyw0lf/github_webhook_watcher": Repository(
-        Path("."),
-        "main",
-        None,
-        Path("after.sh"),
+        local=Path("."),
+        branch="main",
+        remote=None,
+        after_update=Path("after.sh"),
+        after_release=None,
     ),
     "p0lyw0lf/infrastructure": Repository(
-        Path("..") / "infrastructure",
-        "main",
-        None,
-        Path("after.sh"),
+        local=Path("..") / "infrastructure",
+        branch="main",
+        remote=None,
+        after_update=Path("after.sh"),
+        after_release=None,
     ),
 }
