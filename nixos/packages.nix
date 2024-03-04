@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     cmake
     curl
+    difftastic
     fd
     git
     neovim
