@@ -40,6 +40,7 @@
     neovim
     ninja
     nodejs
+    nodePackages.pnpm
     python3
     ripgrep
   ];
