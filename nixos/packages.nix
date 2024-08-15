@@ -2,11 +2,13 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
+    cargo
     cmake
     curl
     difftastic
     fd
     git
+    htop
     neovim
     nodejs
     python3
