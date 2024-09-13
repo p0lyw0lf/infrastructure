@@ -1,0 +1,20 @@
+[Unit]
+Description=FreshRSS via Docker Compose
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+User=root
+Group=docker
+TimeoutStopSec=15
+WorkingDirectory=/home/ubuntu/infrastructure/freshrss
+# Shutdown container if already running on start
+ExecStartPre=/usr/bin/docker compose -f docker-compose.yml down
+# Start container when service is started
+ExecStart=/usr/bin/docker compose -f docker-compose.yml up
+# Stop container when service is stopped
+ExecStop=/usr/bin/docker compose -f docker-compose.yml down
+
+[Install]
+WantedBy=multi-user.target
