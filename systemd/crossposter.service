@@ -11,4 +11,4 @@ Type=simple
 Restart=always
 RestartSec=1
 WorkingDirectory=/home/ubuntu/crossposter
-ExecStart=/home/ubuntu/crossposter/run.sh
+ExecStart=/home/ubuntu/crossposter/run_bot.sh
