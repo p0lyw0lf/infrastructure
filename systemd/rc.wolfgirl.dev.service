@@ -1,0 +1,14 @@
+[Unit]
+Description=PolyWolf's Post Composer
+After=network.target
+StartLimitIntervalSec=0
+
+[Install]
+WantedBy=default.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+WorkingDirectory=/home/ubuntu/crossposter
+ExecStart=/home/ubuntu/crossposter/run_server.sh
