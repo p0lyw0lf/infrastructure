@@ -1,3 +1,8 @@
+upstream rc_wolfgirl_dev {
+  keepalive 100;
+  server 127.0.0.1:8000;
+}
+
 server {
 	server_name rc.wolfgirl.dev;
 	root /home/ubuntu/crossposter/server;
@@ -7,15 +12,26 @@ server {
 	listen 443;
 	ssl_certificate    	/etc/letsencrypt/live/rc.wolfgirl.dev/fullchain.pem;
 	ssl_certificate_key	/etc/letsencrypt/live/rc.wolfgirl.dev/privkey.pem;
-	include /etc/letsencrypt/options-ssl-nginx.conf;
-	ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+	include            	/etc/letsencrypt/options-ssl-nginx.conf;
+	ssl_dhparam        	/etc/letsencrypt/ssl-dhparams.pem;
 
 	location / {
-		proxy_pass http://localhost:8000;
+		proxy_pass             	http://rc_wolfgirl_dev;
+		# Use faster proxying
+		proxy_http_version     	1.1;
+		proxy_request_buffering	off;
+		proxy_buffering        	off;
+		# Security measures
+		proxy_set_header       	Forwarded "by=\"_rc.wolfgirl.dev\";$for_addr;proto=$scheme;host=\"$http_host\"";
+		# Allow websockets
+		proxy_set_header       	Connection "upgrade";
+		proxy_set_header       	Upgrade $http_upgrade;
+		# Allow uploading large files
+		client_max_body_size   	100M;
 	}
 
 	location /assets/ {
-		alias /home/ubuntu/crossposter/server/dist/assets/;
+		alias   	/home/ubuntu/crossposter/server/dist/assets/;
 		sendfile	on;
 	}
 }
@@ -30,4 +46,10 @@ server {
 	}
 
 	return 404;
+}
+
+map $remote_addr $for_addr {
+	~^[0-9.]+$       	"for=$remote_addr";
+	~^[0-9A-Fa-f:.]+$	"for=\"[$remote_addr]\"";
+	default          	"for=unknown";
 }

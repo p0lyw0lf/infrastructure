@@ -11,4 +11,5 @@ Type=simple
 Restart=always
 RestartSec=1
 WorkingDirectory=/home/ubuntu/crossposter
+Environment="SANIC_PROXY_SECRET=_rc.wolfgirl.dev"
 ExecStart=/home/ubuntu/crossposter/run_server.sh
