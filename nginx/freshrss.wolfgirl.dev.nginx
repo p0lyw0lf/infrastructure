@@ -8,8 +8,8 @@ server {
 
 	listen [::]:443;
 	listen 443;
-	ssl_certificate    	/etc/letsencrypt/live/freshrss.wolfgirl.dev-0001/fullchain.pem;
-	ssl_certificate_key	/etc/letsencrypt/live/freshrss.wolfgirl.dev-0001/privkey.pem;
+	ssl_certificate    	/etc/letsencrypt/live/freshrss.wolfgirl.dev/fullchain.pem;
+	ssl_certificate_key	/etc/letsencrypt/live/freshrss.wolfgirl.dev/privkey.pem;
 	include /etc/letsencrypt/options-ssl-nginx.conf;
 	ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
