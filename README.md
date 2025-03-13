@@ -5,4 +5,3 @@ all of the following repositories:
 
 - [crossposter](../crossposter)
 - [girl.technology](../girl.technology)
-- [github_webhook_watcher](../github_webhook_watcher)
