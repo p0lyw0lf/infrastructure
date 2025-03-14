@@ -1,3 +1,4 @@
+---
 _meta:
   type: "config"
   config_version: 2
@@ -16,7 +17,16 @@ config:
           challenge: false
           config:
             signing_key: ${env.BASE64_SERVER_SECRET}
+            subject_key: "username"
             jwt_clock_skew_tolerance_seconds: 20
         authentication_backend:
           type: noop
-    authz:
+      basic_internal_auth_domain:
+        http_enabled: true
+        transport_enabled: true
+        order: 1
+        http_authenticator:
+          type: basic
+          challenge: true
+        authentication_backend:
+          type: internal

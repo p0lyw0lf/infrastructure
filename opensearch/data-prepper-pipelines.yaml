@@ -1,0 +1,6 @@
+sink:
+  - opensearch:
+    hosts: ["https://opensearch-node:9200"]
+    username: polywolf
+    password: ${ADMIN_PASSWORD}
+    # TODO: rest

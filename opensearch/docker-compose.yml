@@ -37,8 +37,27 @@ services:
     networks:
       - opensearch-net
 
+  # From https://forum.opensearch.org/t/using-environment-variables-for-openid-connect-url-and-secret/22855/3, until we get real environment variable support in Data Prepper
+  envsubst-service:
+    image: alpine-envsubst
+    environment:
+      - "ADMIN_PASSWORD=${ADMIN_PASSWORD}"
+    command: /bin/bash -c "envsubst < /templates/data-prepper-pipelines.yaml > /output/pipelines.yaml"
+    volumes:
+      - ./data-prepper-pipelines.yaml:/templates/data-prepper-pipelines.yaml
+      - shared-data-prepper:/output
+
+  data-prepper:
+    image: opensearchproject/data-prepper:latest
+    ports:
+      - 21890:21890
+      - 21891:21891
+    volumes:
+      - shared-data-prepper:/usr/share/data-prepper/pipelines
+
 volumes:
   opensearch-data:
+  shared-data-prepper:
 
 networks:
   opensearch-net:

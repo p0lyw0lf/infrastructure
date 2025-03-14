@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+"$SCRIPT_DIR/../with_secret_env.sh" "$SCRIPT_DIR/../secret.env" "$SCRIPT_DIR/password.env" -- docker compose "$@"
