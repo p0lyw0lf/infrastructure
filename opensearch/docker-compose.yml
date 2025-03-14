@@ -7,8 +7,7 @@ services:
       - bootstrap.memory_lock=true # Disable JVM heap memory swapping
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g" # Set min and max JVM heap sizes to at least 50% of system RAM
       - "DISABLE_INSTALL_DEMO_CONFIG=true" # Prevents execution of bundled demo script which would install demo certificates and security configuration
-      # - "DISABLE_SECURITY_PLUGIN=true"
-      - "BASE64_SERVER_SECRET=${BASE64_SERVER_SECRET}" # Pass thru server secret
+      - "DISABLE_SECURITY_PLUGIN=true"
     ulimits:
       memlock:
         soft: -1 # Set memlock to unlimited (no soft or hard limit)
@@ -17,13 +16,7 @@ services:
         soft: 65536 # Maximum number of open files for the opensearch user - set to at least 65536
         hard: 65536
     volumes:
-      - opensearch-data:/usr/share/opensearch/data # Creates volume called opensearch-data1 and mounts it to the container
-      - ./root-ca.pem:/usr/share/opensearch/config/root-ca.pem
-      - ./admin.pem:/usr/share/opensearch/config/admin.pem
-      - ./admin-key.pem:/usr/share/opensearch/config/admin-key.pem
-      - ./node.pem:/usr/share/opensearch/config/node.pem
-      - ./node-key.pem:/usr/share/opensearch/config/node-key.pem
-      - ./opensearch.yml:/usr/share/opensearch/config/opensearch.yml
+      - opensearch-data:/usr/share/opensearch/data # Creates volume called opensearch-data and mounts it to the container
     ports:
       - 9200:9200 # REST API
       - 9600:9600 # Performance Analyzer
@@ -37,33 +30,32 @@ services:
     expose:
       - "5601" # Expose port 5601 for web access to OpenSearch Dashboards
     environment:
-      - 'OPENSEARCH_HOSTS=["https://opensearch-node:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
-      # - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true"
-      - "BASE64_SERVER_SECRET=${BASE64_SERVER_SECRET}"
+      - 'OPENSEARCH_HOSTS=["http://opensearch-node:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
+      - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true"
     networks:
       - opensearch-net
 
   # From https://forum.opensearch.org/t/using-environment-variables-for-openid-connect-url-and-secret/22855/3, until we get real environment variable support in Data Prepper
-  envsubst-service:
-    image: alpine-envsubst
-    environment:
-      - "ADMIN_PASSWORD=${ADMIN_PASSWORD}"
-    command: /bin/bash -c "envsubst < /templates/data-prepper-pipelines.yaml > /output/pipelines.yaml"
-    volumes:
-      - ./data-prepper-pipelines.yaml:/templates/data-prepper-pipelines.yaml
-      - shared-data-prepper:/output
+  # envsubst-service:
+  #   image: alpine-envsubst
+  #   environment:
+  #     - "ADMIN_PASSWORD=${ADMIN_PASSWORD}"
+  #   command: /bin/bash -c "envsubst < /templates/data-prepper-pipelines.yaml > /output/pipelines.yaml"
+  #   volumes:
+  #     - ./data-prepper-pipelines.yaml:/templates/data-prepper-pipelines.yaml
+  #     - shared-data-prepper:/output
 
-  data-prepper:
-    image: opensearchproject/data-prepper:latest
-    ports:
-      - 21890:21890
-      - 21891:21891
-    volumes:
-      - shared-data-prepper:/usr/share/data-prepper/pipelines
+  # data-prepper:
+  #   image: opensearchproject/data-prepper:latest
+  #   ports:
+  #     - 21890:21890
+  #     - 21891:21891
+  #   volumes:
+  #     - shared-data-prepper:/usr/share/data-prepper/pipelines
 
 volumes:
   opensearch-data:
-  shared-data-prepper:
+  # shared-data-prepper:
 
 networks:
   opensearch-net:
