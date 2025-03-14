@@ -6,7 +6,9 @@ services:
       - discovery.type=single-node # Run a single-node cluster
       - bootstrap.memory_lock=true # Disable JVM heap memory swapping
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g" # Set min and max JVM heap sizes to at least 50% of system RAM
-      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD} # Sets the demo admin user password when using demo configuration (for OpenSearch 2.12 and later)
+      - "DISABLE_INSTALL_DEMO_CONFIG=true" # Prevents execution of bundled demo script which would install demo certificates and security configuration
+      - "DISABLE_SECURITY_PLUGIN=true"
+      - "BASE64_SERVER_SECRET=${BASE64_SERVER_SECRET}" # Pass thru server secret
     ulimits:
       memlock:
         soft: -1 # Set memlock to unlimited (no soft or hard limit)
@@ -29,7 +31,9 @@ services:
     expose:
       - "5601" # Expose port 5601 for web access to OpenSearch Dashboards
     environment:
-      OPENSEARCH_HOSTS: '["https://opensearch-node:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
+      - 'OPENSEARCH_HOSTS=["https://opensearch-node:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
+      - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true"
+      - "BASE64_SERVER_SECRET=${BASE64_SERVER_SECRET}"
     networks:
       - opensearch-net
 
