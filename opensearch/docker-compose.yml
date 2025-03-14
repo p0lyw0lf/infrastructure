@@ -7,7 +7,7 @@ services:
       - bootstrap.memory_lock=true # Disable JVM heap memory swapping
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g" # Set min and max JVM heap sizes to at least 50% of system RAM
       - "DISABLE_INSTALL_DEMO_CONFIG=true" # Prevents execution of bundled demo script which would install demo certificates and security configuration
-      - "DISABLE_SECURITY_PLUGIN=true"
+      # - "DISABLE_SECURITY_PLUGIN=true"
       - "BASE64_SERVER_SECRET=${BASE64_SERVER_SECRET}" # Pass thru server secret
     ulimits:
       memlock:
@@ -18,6 +18,12 @@ services:
         hard: 65536
     volumes:
       - opensearch-data:/usr/share/opensearch/data # Creates volume called opensearch-data1 and mounts it to the container
+      - ./root-ca.pem:/usr/share/opensearch/config/root-ca.pem
+      - ./admin.pem:/usr/share/opensearch/config/admin.pem
+      - ./admin-key.pem:/usr/share/opensearch/config/admin-key.pem
+      - ./node.pem:/usr/share/opensearch/config/node.pem
+      - ./node-key.pem:/usr/share/opensearch/config/node-key.pem
+      - ./opensearch.yml:/usr/share/opensearch/config/opensearch.yml
     ports:
       - 9200:9200 # REST API
       - 9600:9600 # Performance Analyzer
@@ -32,7 +38,7 @@ services:
       - "5601" # Expose port 5601 for web access to OpenSearch Dashboards
     environment:
       - 'OPENSEARCH_HOSTS=["https://opensearch-node:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
-      - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true"
+      # - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true"
       - "BASE64_SERVER_SECRET=${BASE64_SERVER_SECRET}"
     networks:
       - opensearch-net
