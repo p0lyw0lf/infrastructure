@@ -56,7 +56,10 @@ server {
 		proxy_pass		http://localhost:5601;
 	}
 
-	error_page 401 /login;
+	error_page 401 = @goto_login;
+	location @goto_login {
+		return 301 /login?next=$request_uri;
+	}
 }
 
 server {
