@@ -21,7 +21,7 @@ server {
 		proxy_http_version     	1.1;
 		proxy_request_buffering	off;
 		proxy_buffering        	off;
-		# Security measures
+		# Security measures for Sanic
 		proxy_set_header       	Forwarded "by=\"_rc.wolfgirl.dev\";$for_addr;proto=$scheme;host=\"$http_host\"";
 		# Allow websockets
 		proxy_set_header       	Connection "upgrade";
@@ -30,10 +30,33 @@ server {
 		client_max_body_size   	100M;
 	}
 
+	# Just for authentication with ngx_http_auth_request_module
+	location = /auth {
+		proxy_pass		http://rc_wolfgirl_dev;
+		proxy_pass_request_body	off;
+		proxy_set_header	Content-Length "";
+		proxy_set_header	X-Original-URI $request_uri;
+		# Use faster proxying
+		proxy_http_version     	1.1;
+		proxy_request_buffering	off;
+		proxy_buffering        	off;
+		# Security measures for Sanic
+		proxy_set_header       	Forwarded "by=\"_rc.wolfgirl.dev\";$for_addr;proto=$scheme;host=\"$http_host\"";
+	}
+
 	location /assets/ {
 		alias   	/home/ubuntu/crossposter/server/dist/assets/;
 		sendfile	on;
 	}
+
+	location /opensearch {
+		auth_request		/auth;
+		proxy_set_header	Host $host;
+		proxy_set_header	X-Real-IP $remote_addr;
+		proxy_pass		http://localhost:5601;
+	}
+
+	error_page 401 /login;
 }
 
 server {

@@ -30,6 +30,8 @@ services:
     expose:
       - "5601" # Expose port 5601 for web access to OpenSearch Dashboards
     environment:
+      - 'SERVER_BASEPATH="/opensearch"'
+      - 'SERVER_REWRITEBASEPATH=true'
       - 'OPENSEARCH_HOSTS=["http://opensearch-node:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
       - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true"
     networks:
