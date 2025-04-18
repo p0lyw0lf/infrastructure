@@ -1,28 +1,18 @@
-# To shim this file into a NixOS installation:
-# {
-#   description = "NixOS Flake system configuration shim";
-#
-#   inputs = {
-#     infrastructure.url = "git+file:///path/to/infrastructure?dir=nixos";
-#   };
-#
-#   outputs = { self, infrastructure, ...}: infrastructure;
-# }
 {
-  description = "NixOS system configuration flake";
+  description = "Remote server images";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-24.11";
+    blueprint.url = "github:numtide/blueprint";
+    blueprint.inputs.nixpkgs.follows = "nixpkgs";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.url = "github:mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    srvos.url = "github:nix-community/srvos";
+    srvos.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, ...}: {
-    nixosConfigurations.nixos-wsl = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-        ./packages.nix
-        ./postgresql.nix
-      ];
-    };
-  };
+  # Load the blueprint
+  outputs = inputs: inputs.blueprint { inherit inputs; };
 }
