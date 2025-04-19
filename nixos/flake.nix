@@ -5,8 +5,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-24.11";
     blueprint.url = "github:numtide/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     srvos.url = "github:nix-community/srvos";
