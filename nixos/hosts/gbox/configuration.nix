@@ -1,7 +1,7 @@
 { flake, ... }:
 {
   imports = [
-    flake.nixosModules.server
+    flake.nixosModules.devbox
     ./hardware-configuration.nix
   ];
 
@@ -16,4 +16,6 @@
   sops.defaultSopsFile = ./secrets.yaml;
 
   system.stateVersion = "24.05";
+
+  devbox.freshrss.domain = "freshrss.gbox.wolfgirl.dev";
 }
