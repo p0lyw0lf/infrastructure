@@ -1,11 +1,12 @@
 { config, lib, ... }:
 let
   cfg = config.devbox.pds;
-
-  # Given a domain name, calculate the server_name alias for a wildcard
-  wildcardAlias = domain: "~^(?<sub>.+)\\.${lib.strings.escape [ "." ] domain}$";
 in
 {
+  imports = [
+    ./nginx-wildcard.nix
+  ];
+
   options.devbox.pds = with lib; {
     domain = mkOption {
       type = types.str;
@@ -34,9 +35,6 @@ in
 
     services.nginx.enable = true;
     services.nginx.virtualHosts.${cfg.domain} = {
-      serverAliases = [ (wildcardAlias cfg.domain) ];
-
-      enableACME = true;
       forceSSL = true;
 
       locations."~ ^(/xrpc|/.well-known/atproto-did)" = {
@@ -46,5 +44,7 @@ in
 
       };
     };
+
+    devbox.nginx.wildcard.domains.${cfg.domain}.enable = true;
   };
 }
