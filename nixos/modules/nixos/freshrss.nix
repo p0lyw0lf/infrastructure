@@ -12,7 +12,11 @@ in
   };
 
   config = {
-    sops.secrets.freshrss_password = { };
+    sops.secrets.freshrss_password = {
+      # Allow the freshrss user to read this file
+      mode = "0440";
+      group = config.users.users.${config.services.freshrss.user}.group;
+    };
 
     services.freshrss = {
       enable = true;
