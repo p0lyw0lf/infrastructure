@@ -34,8 +34,6 @@ stdenv.mkDerivation (finalAttrs: {
     runHook preInstall
 
     mkdir -p $out
-    pwd
-    ls
     cd service
     cp index.js $out
     cp -R node_modules $out
