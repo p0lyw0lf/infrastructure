@@ -7,7 +7,7 @@ in
     domain = mkOption {
       type = types.str;
       description = "Default domain for FreshRSS";
-      example = "reshrss.wolfgirl.dev";
+      example = "freshrss.wolfgirl.dev";
     };
   };
 
