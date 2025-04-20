@@ -6,8 +6,9 @@ pkgs.mkShell {
       sops-nix.default
     ])
     ++ (with pkgs; [
-      nixos-rebuild
       age
+      just
+      nixos-rebuild
       pwgen
       sops
       ssh-to-age

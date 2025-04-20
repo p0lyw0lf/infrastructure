@@ -1,0 +1,2 @@
+gbox:
+  nixos-rebuild switch --flake .#gbox --target-host gbox
