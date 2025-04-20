@@ -2,13 +2,8 @@
 let
   cfg = config.devbox.pds;
 
-  # Given a domain name, calculate the server_name directive
-  serverName =
-    domain:
-    let
-      escaped = lib.strings.escape [ "." ] domain;
-    in
-    "${domain} ~^(?<sub>.+)\\.${escaped}$";
+  # Given a domain name, calculate the server_name alias for a wildcard
+  wildcardAlias = domain: "~^(?<sub>.+)\\.${lib.strings.escape [ "." ] domain}$";
 in
 {
   options.devbox.pds = with lib; {
@@ -39,13 +34,13 @@ in
 
     services.nginx.enable = true;
     services.nginx.virtualHosts.${cfg.domain} = {
-      serverName = serverName cfg.domain;
+      serverAliases = [ (wildcardAlias cfg.domain) ];
 
       enableACME = true;
       forceSSL = true;
 
       locations."~ ^(/xrpc|/.well-known/atproto-did)" = {
-        proxyPass = "http://localhost:${config.services.pds.settings.PDS_PORT}";
+        proxyPass = "http://localhost:${toString config.services.pds.settings.PDS_PORT}";
         proxyWebsockets = true;
         recommendedProxySettings = true;
 

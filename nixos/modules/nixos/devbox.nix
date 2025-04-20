@@ -2,7 +2,10 @@
 {
   imports = [
     ./server.nix
+
     ./freshrss.nix
+    ./pds.nix
+
     inputs.srvos.nixosModules.mixins-nginx
   ];
 
