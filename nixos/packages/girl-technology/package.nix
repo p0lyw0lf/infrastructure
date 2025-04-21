@@ -4,14 +4,14 @@
 }:
 rustPlatform.buildRustPackage {
   pname = "girl_technology";
-  version = "0.3.0";
+  version = "0.4.0";
 
   src = fetchFromGitHub {
     owner = "p0lyw0lf";
     repo = "girl.technology";
-    rev = "632efc130d0c3e90c06d6c397e72c9a841d8f046";
-    hash = "sha256-13MI9J5LaJloQy+8YhyB8w1cZpMZKNfS3eTc1oKs9uw=";
+    rev = "47d11d678f1fb2817d95bf5ca0854034dc05b35e";
+    hash = "sha256-cbSGAhp9mpIKtD1XQ8/jyPDvWa615jgX/yTNC2AqV5M=";
   };
 
-  cargoHash = "sha256-nTwt21s059C/SV1hAzHkC5HVTDakBJ3fn8RcTvxYYdw=";
+  cargoHash = "sha256-90dbFYXdPQxP07Z0aZ5++1KgUIkPxTVPyi255cyo2nA=";
 }
