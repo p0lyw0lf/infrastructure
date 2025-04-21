@@ -8,6 +8,7 @@ pkgs.mkShell {
     ++ (with pkgs; [
       age
       just
+      nix-output-monitor
       nixos-rebuild
       pwgen
       sops

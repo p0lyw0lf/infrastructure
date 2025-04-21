@@ -4,10 +4,11 @@
   ...
 }:
 pkgs.callPackage (import ./package.nix) {
-  girl-technology = perSystem.self.girl-technology;
   diesel-cli = pkgs.diesel-cli.override {
     sqliteSupport = false;
     postgresqlSupport = true;
     mysqlSupport = false;
   };
+  girl-technology = perSystem.self.girl-technology;
+  girl-technology-static = perSystem.self.girl-technology-static;
 }
