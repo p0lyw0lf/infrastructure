@@ -1,4 +1,7 @@
-{ fetchFromGitHub, rustPlatform }:
+{
+  fetchFromGitHub,
+  rustPlatform,
+}:
 rustPlatform.buildRustPackage {
   pname = "girl_technology";
   version = "0.3.0";
@@ -10,5 +13,5 @@ rustPlatform.buildRustPackage {
     hash = "sha256-13MI9J5LaJloQy+8YhyB8w1cZpMZKNfS3eTc1oKs9uw=";
   };
 
-  cargoHash = "sha256-rsXjq3hYhJlanpgzWxJzGH1MJ78yb4qRD92L8j7rP0k=";
+  cargoHash = "sha256-nTwt21s059C/SV1hAzHkC5HVTDakBJ3fn8RcTvxYYdw=";
 }
