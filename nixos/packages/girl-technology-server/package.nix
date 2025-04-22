@@ -11,6 +11,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   src = girl-technology.src;
 
   installPhase = ''
+    mkdir -p $out/assets
+    cp -R assets/* $out/assets
+
     mkdir -p $out/migrations
     cp -R migrations/* $out/migrations
 
