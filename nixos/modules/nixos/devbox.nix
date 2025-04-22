@@ -4,6 +4,7 @@
     ./server.nix
 
     ./freshrss.nix
+    ./girl-technology.nix
     ./pds.nix
 
     inputs.srvos.nixosModules.mixins-nginx

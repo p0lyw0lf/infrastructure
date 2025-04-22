@@ -19,4 +19,5 @@
 
   devbox.freshrss.domain = "freshrss.gbox.wolfgirl.dev";
   devbox.pds.domain = "bsky.gbox.wolfgirl.dev";
+  devbox.girl-technology.domain = "bsky.gbox.wolfgirl.dev";
 }
