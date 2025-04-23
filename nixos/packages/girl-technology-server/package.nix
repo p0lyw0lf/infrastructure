@@ -28,6 +28,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     mkdir -p $out/bin
     cat <<EOF > $out/bin/girl_technology_server
     #!${bash}/bin/bash
+    set -euo
     ${diesel-cli}/bin/diesel setup
     ${girl-technology}/bin/girl_technology
     EOF

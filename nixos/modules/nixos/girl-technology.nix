@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.devbox.girl-technology;
+  databaseName = if cfg.databaseName == null then cfg.user else cfg.databaseName;
 in
 {
   imports = [
@@ -16,7 +17,7 @@ in
   options = with lib; {
     devbox.girl-technology = {
       domain = mkOption {
-        type = types.string;
+        type = types.str;
         default = "girl.technology";
         description = "The base domain to use for the girl-technology server";
       };
@@ -28,12 +29,12 @@ in
       };
 
       user = mkOption {
-        type = types.string;
+        type = types.str;
         default = "girl-technology";
       };
 
       group = mkOption {
-        type = types.string;
+        type = types.str;
         default = "girl-technology";
       };
 
@@ -44,9 +45,9 @@ in
       };
 
       databaseName = mkOption {
-        type = types.string;
-        default = "girl.technology";
-        description = "The PostgreSQL database to use as backing storage for the girl-technology server.";
+        type = types.nullOr types.str;
+        default = null;
+        description = "The PostgreSQL database to use as backing storage for the girl-technology server. Defaults to the username.";
       };
     };
   };
@@ -66,7 +67,7 @@ in
       after = [ "network.target" ];
 
       environment = {
-        DATABASE_URL = "postgres://${cfg.user}@127.0.0.1/${cfg.databaseName}";
+        DATABASE_URL = "postgres://${cfg.user}@127.0.0.1/${databaseName}";
         GIRL_TECHNOLOGY_MAIN_DOMAIN = cfg.domain;
         GIRL_TECHNOLOGY_PORT = toString cfg.port;
       };
@@ -87,18 +88,35 @@ in
 
     services.postgresql = {
       enable = true;
-      ensureDatabases = [ cfg.databaseName ];
       enableTCPIP = true;
       # Allow the given user to access the database w/o a password
-      authentication = lib.mkOverride 10 ''
-        # type database            DBUser      origin-address auth-method
-        local  ${cfg.databaseName} ${cfg.user}                trust
-        host   ${cfg.databaseName} ${cfg.user} 127.0.0.1/32   trust
-        host   ${cfg.databaseName} ${cfg.user} ::1/128        trust
+      authentication = ''
+        # type database        DBUser      origin-address auth-method
+        host   ${databaseName} ${cfg.user} 127.0.0.1/32   trust
+        host   ${databaseName} ${cfg.user} ::1/128        trust
+        host   postgres        ${cfg.user} 127.0.0.1/32   trust
+        host   postgres        ${cfg.user} ::1/128        trust
       '';
-      initialScript = pkgs.writeText "girl-technology-db-initScript" ''
-        CREATE ROLE ${cfg.user} WITH LOGIN CREATEDB;
-      '';
+      # TODO: this doesn't seem to be completely idempotent, I ended up needing
+      # to run these commands manually during debugging. However! It seems to
+      # work now at least :)
+      initialScript =
+        pkgs.writeText "girl-technology-db-initScript" ''
+          CREATE ROLE "${cfg.user}" WITH LOGIN CREATEDB;
+          CREATE DATABASE "${cfg.user}";
+          GRANT ALL PRIVILEGES ON DATABASE "${cfg.user}" TO "${cfg.user}";
+          ALTER DATABASE "${cfg.user}" OWNER TO "${cfg.user}";
+        ''
+        + (
+          if cfg.user != databaseName then
+            ''
+              CREATE DATABASE "${databaseName}";
+              GRANT ALL PRIVILEGES ON DATABASE "${databaseName}" TO "${cfg.user}";
+              ALTER DATABASE "${databaseName}" OWNER TO "${cfg.user}";
+            ''
+          else
+            ""
+        );
     };
 
     services.nginx.enable = true;
@@ -111,7 +129,7 @@ in
         in
         {
           extraConfig = ''
-            if ($sub = \'\') {
+            if ($sub = ''') {
               proxy_pass ${baseURL};
             }
             proxy_pass ${baseURL}/category/$sub;
