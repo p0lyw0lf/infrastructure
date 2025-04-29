@@ -1,5 +1,5 @@
 upstream rc_wolfgirl_dev {
-  keepalive 100;
+  keepalive 300;
   server 127.0.0.1:8000;
 }
 
@@ -45,15 +45,18 @@ server {
 	}
 
 	location /assets/ {
-		alias   	/home/ubuntu/crossposter/server/dist/assets/;
+		alias   	/home/ubuntu/crossposter/rc/web/dist/assets/;
 		sendfile	on;
+		gzip 		on;
+		gzip_types	*;
+		add_header	'Cache-Control' "public, max-age=60";
 	}
 
-	location /opensearch {
-		auth_request		/auth;
-		proxy_set_header	Host $host;
-		proxy_set_header	X-Real-IP $remote_addr;
-		proxy_pass		http://localhost:5601;
+	location /log_files/ {
+		auth_request	/auth;
+		alias		/home/ubuntu/crossposter/rc/log_files/;
+		sendfile	on;
+		gzip		off;
 	}
 
 	error_page 401 = @goto_login;
