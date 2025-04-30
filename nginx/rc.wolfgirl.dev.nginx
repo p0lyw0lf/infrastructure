@@ -54,7 +54,7 @@ server {
 
 	location /log_files/ {
 		auth_request	/auth;
-		alias		/home/ubuntu/crossposter/rc/log_files/;
+		alias		/home/ubuntu/crossposter/rc/src/rc/log_files/;
 		sendfile	on;
 		gzip		off;
 	}
