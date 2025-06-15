@@ -9,6 +9,9 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
+
+    girl-technology.url = "github:p0lyw0lf/girl.technology";
+    girl-technology.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   # Load the blueprint

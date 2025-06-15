@@ -40,8 +40,8 @@ in
 
       package = mkOption {
         type = types.package;
-        default = perSystem.self.girl-technology-server;
-        description = "The package to use for girl-technology. Should be the one included with this flake probably";
+        default = perSystem.girl-technology.girl-technology-server;
+        description = "The package to use for girl-technology. Should be the one included with the girl-technology flake probably";
       };
 
       databaseName = mkOption {
