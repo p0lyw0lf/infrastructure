@@ -18,6 +18,7 @@
   system.stateVersion = "24.05";
 
   devbox.freshrss.domain = "freshrss.gbox.wolfgirl.dev";
-  devbox.pds.domain = "bsky.gbox.wolfgirl.dev";
   devbox.girl-technology.domain = "bsky.gbox.wolfgirl.dev";
+  devbox.rc-wolfgirl-dev.domain = "rc.gbox.wolfgirl.dev";
+  devbox.pds.domain = "bsky.gbox.wolfgirl.dev";
 }

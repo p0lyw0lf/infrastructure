@@ -4,3 +4,8 @@ creation_rules:
     - age:
       - age15qprsda4w5jmefadmnz27qatjc5v56ptgeyj3qrvwdfw76rzgu4s88cu7q
       - age1ydp7sku0ayvdphvrgvn3r5ets37ned6x5ky3hkc2hw8huanakvqstx3c94
+ - path_regex: ^hosts/gbox/secrets.yaml$
+   key_groups:
+    - age:
+      - age15qprsda4w5jmefadmnz27qatjc5v56ptgeyj3qrvwdfw76rzgu4s88cu7q
+      - age1ydp7sku0ayvdphvrgvn3r5ets37ned6x5ky3hkc2hw8huanakvqstx3c94

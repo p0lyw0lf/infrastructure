@@ -12,6 +12,8 @@
 
     girl-technology.url = "github:p0lyw0lf/girl.technology";
     girl-technology.inputs.nixpkgs.follows = "nixpkgs";
+    rc-wolfgirl-dev.url = "github:p0lyw0lf/crossposter";
+    rc-wolfgirl-dev.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   # Load the blueprint
