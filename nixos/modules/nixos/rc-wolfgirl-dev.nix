@@ -53,12 +53,17 @@ in
   };
 
   config = {
-    users = {
-      users.${cfg.user} = {
-        group = cfg.group;
-        isSystemUser = true;
-      };
-      groups.${cfg.group} = { };
+
+    users.users."${cfg.user}" = {
+      description = "rc.wolfgirl.dev service user";
+      isSystemUser = true;
+      group = "${cfg.group}";
+      home = cfg.dataDir;
+    };
+    users.groups."${cfg.group}" = { };
+
+    systemd.tmpfiles.settings."10-rc-wolfgirl-dev".${cfg.dataDir}.d = {
+      inherit (cfg) user group;
     };
 
     sops.secrets.rc_wolfgirl_dev_key = {
@@ -109,43 +114,45 @@ in
       locations."/" = {
         proxyPass = "http://rc_wolfgirl_dev";
         proxyWebsockets = true;
-        recommendedProxySettings = true;
         extraConfig = ''
+          # Use faster proxying
+          proxy_request_buffering   off;
+          proxy_buffering           off;
           # Security measures for Sanic
-          proxy_set_header      Forwarded "by=\"_${cfg.domain}\";$for_addr;proto=$scheme;host=\"$http_host\"";
+          proxy_set_header          Forwarded "by=\"_${cfg.domain}\";$for_addr;proto=$scheme;host=\"$http_host\"";
           # Allow uploading large files
-          client_max_body_size  100M;
+          client_max_body_size      100M;
         '';
       };
 
       # Just for authentication with ngx_http_auth_request_module
       locations."/auth".extraConfig = ''
-        proxy_pass                http://rc_wolfgirl_dev;
-        proxy_pass_request_body   off;
-        proxy_set_header          Content-Length "";
-        proxy_set_header          X-Original-URI $request_uri;
+        proxy_pass                  http://rc_wolfgirl_dev;
+        proxy_pass_request_body     off;
+        proxy_set_header            Content-Length "";
+        proxy_set_header            X-Original-URI $request_uri;
         # Use faster proxying
-        proxy_http_version        1.1;
-        proxy_request_buffering   off;
-        proxy_buffering           off;
+        proxy_http_version          1.1;
+        proxy_request_buffering     off;
+        proxy_buffering             off;
         # Security measures for Sanic
-        proxy_set_header          Forwarded "by=\"_${cfg.domain}\";$for_addr;proto=$scheme;host=\"$http_host\"";
+        proxy_set_header            Forwarded "by=\"_${cfg.domain}\";$for_addr;proto=$scheme;host=\"$http_host\"";
       '';
 
-      locations."/assets/".extraConfig = ''
-        alias           ${cfg.staticPackage}/web/dist/assets/;
-        sendfile        on;
-        gzip            on;
-        gzip_types      *;
-        add_header      'Cache-Control' "public, max-age=60";
-      '';
+      locations."/assets/" = {
+        alias = "${cfg.staticPackage}/assets/";
+        extraConfig = ''
+          add_header      'Cache-Control' "public, max-age=60";
+        '';
+      };
 
-      locations."/log_files/".extraConfig = ''
-        auth_request    /auth;
-        alias           ${cfg.dataDir}/log_files/;
-        sendfile        on;
-        gzip            off;
-      '';
+      locations."/log_files/" = {
+        alias = "${cfg.dataDir}/log_files/";
+        extraConfig = ''
+          auth_request    /auth;
+          gzip            off;
+        '';
+      };
 
       extraConfig = ''
         error_page 401 = @goto_login;

@@ -137,11 +137,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752366880,
-        "narHash": "sha256-WmdIfZ/5LqH8YtzxOIo5rXbmBkYo5yRufsMmo2PZay0=",
+        "lastModified": 1752414807,
+        "narHash": "sha256-kP0jIA7hQG8MVXn9UxMcB9XpJxjIItV6wbxzzL36c4w=",
         "owner": "p0lyw0lf",
         "repo": "crossposter",
-        "rev": "551f3ec533e52c570e2e7a6fe653815fbad8c746",
+        "rev": "9a657a58e3f7f3ac5d20f8cc984577dc1fbaa663",
         "type": "github"
       },
       "original": {
