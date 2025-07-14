@@ -3,6 +3,7 @@
   imports = [
     ./server.nix
 
+    ./bot-crossposter.nix
     ./freshrss.nix
     ./girl-technology.nix
     ./rc-wolfgirl-dev.nix

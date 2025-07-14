@@ -8,69 +8,35 @@ let
   cfg = config.devbox.rc-wolfgirl-dev;
 in
 {
-  options = with lib; {
-    devbox.rc-wolfgirl-dev = {
-      domain = mkOption {
-        type = types.str;
-        default = "rc.wolfgirl.dev";
-        description = "The base domain to use for the RC server";
-      };
+  imports = [ ./rc-secrets.nix ];
 
-      port = mkOption {
-        type = types.int;
-        default = 8000;
-        description = "The port to run the RC server on.";
-      };
+  options.devbox.rc-wolfgirl-dev = with lib; {
+    domain = mkOption {
+      type = types.str;
+      default = "rc.wolfgirl.dev";
+      description = "The base domain to use for the RC server";
+    };
 
-      user = mkOption {
-        type = types.str;
-        default = "rc-wolfgirl-dev";
-      };
+    port = mkOption {
+      type = types.int;
+      default = 8000;
+      description = "The port to run the RC server on.";
+    };
 
-      group = mkOption {
-        type = types.str;
-        default = "rc-wolfgirl-dev";
-      };
+    package = mkOption {
+      type = types.package;
+      default = perSystem.rc-wolfgirl-dev.rc-crossposter;
+      description = "The package to use to run the server. Should be a sanic binary accepting the standard flags/environment variables.";
+    };
 
-      dataDir = mkOption {
-        type = types.path;
-        default = "/var/lib/rc-wolfgirl-dev";
-        description = "The data directory for placing persistent files";
-      };
-
-      package = mkOption {
-        type = types.package;
-        default = perSystem.rc-wolfgirl-dev.rc-crossposter;
-        description = "The package to use to run the server. Should be a sanic binary accepting the standard flags/environment variables.";
-      };
-
-      staticPackage = mkOption {
-        type = types.package;
-        default = perSystem.rc-wolfgirl-dev.rc-crossposter-static;
-        description = "The package containing the static files for the server. MUST be the same as the one that cfg.package is using.";
-      };
+    staticPackage = mkOption {
+      type = types.package;
+      default = perSystem.rc-wolfgirl-dev.rc-crossposter-static;
+      description = "The package containing the static files for the server.";
     };
   };
 
   config = {
-
-    users.users."${cfg.user}" = {
-      description = "rc.wolfgirl.dev service user";
-      isSystemUser = true;
-      group = "${cfg.group}";
-      home = cfg.dataDir;
-    };
-    users.groups."${cfg.group}" = { };
-
-    systemd.tmpfiles.settings."10-rc-wolfgirl-dev".${cfg.dataDir}.d = {
-      inherit (cfg) user group;
-    };
-
-    sops.secrets.rc_wolfgirl_dev_key = {
-      mode = "0440";
-      group = cfg.group;
-    };
-
     systemd.services."rc.wolfgirl.dev" = {
       description = "Server for https://${cfg.domain}";
       wantedBy = [ "multi-user.target" ];
@@ -87,7 +53,7 @@ in
         Restart = "always";
         RestartSec = "10s";
 
-        ExecStart = "${cfg.package}/bin/rc-crossposter --port ${toString cfg.port}";
+        ExecStart = "${lib.getExe cfg.package} --port ${toString cfg.port}";
 
         User = cfg.user;
         Group = cfg.group;
