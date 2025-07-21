@@ -13,7 +13,7 @@
   networking.hostName = "gbox";
   networking.domain = "us-central1-c.c.solar-attic-303316.internal";
 
-  sops.defaultSopsFile = ./secrets.yaml;
+  sops.defaultSopsFile = ../secrets.yaml;
 
   system.stateVersion = "24.05";
 

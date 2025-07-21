@@ -10,7 +10,7 @@
   networking.hostName = "devbox";
   networking.domain = "";
 
-  sops.defaultSopsFile = ./secrets.yaml;
+  sops.defaultSopsFile = ../secrets.yaml;
 
   system.stateVersion = "24.05";
 }
