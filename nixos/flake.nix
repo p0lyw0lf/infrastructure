@@ -14,6 +14,8 @@
     girl-technology.inputs.nixpkgs.follows = "nixpkgs";
     rc-wolfgirl-dev.url = "github:p0lyw0lf/crossposter";
     rc-wolfgirl-dev.inputs.nixpkgs.follows = "nixpkgs";
+    dotl-bud.url = "github:p0lyw0lf/DotL-Bud?ref=discordpy-v2";
+    dotl-bud.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   # Load the blueprint

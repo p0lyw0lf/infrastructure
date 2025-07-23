@@ -2,6 +2,7 @@
 {
   imports = [
     flake.nixosModules.server
+    flake.nixosModules.dotl-bud
     ./hardware-configuration.nix
   ];
 
