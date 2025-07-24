@@ -29,11 +29,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1753065489,
-        "narHash": "sha256-mT/zmN19QuO5wSpZBiGaKRA0iAdhbFFCZpq6Kgxdcvw=",
+        "lastModified": 1753322717,
+        "narHash": "sha256-Rc/TkF4mSPgZGS/anORyDLtrvwEgz0AxCByOGtkgQiM=",
         "owner": "p0lyw0lf",
         "repo": "DotL-Bud",
-        "rev": "9212d6732592efdd564baa33b1f654538b1cb0fb",
+        "rev": "9dfe249928c083876bba6e8f5ce1409a1af5e855",
         "type": "github"
       },
       "original": {

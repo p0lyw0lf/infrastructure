@@ -2,6 +2,7 @@
   config,
   lib,
   perSystem,
+  pkgs,
   ...
 }:
 let
@@ -13,6 +14,12 @@ in
       type = types.package;
       default = perSystem.dotl-bud.dotl-bud-bin;
       description = "The package to use to run the crossposter bot.";
+    };
+
+    dbPackage = mkOption {
+      type = types.package;
+      default = perSystem.dotl-bud.dotl-bud-db;
+      description = "The package containing all the non-Python data files necessary to run the bot";
     };
 
     user = mkOption {
@@ -68,7 +75,15 @@ in
         Restart = "always";
         RestartSec = "10s";
 
-        ExecStart = lib.getExe cfg.package;
+        ExecStart = pkgs.writeShellScript "dotl-bud-wrapper" ''
+          for folder in db filter help perms; do
+            if [ ! -d ${cfg.dataDir}/$folder ]; then
+              cp -R ${cfg.dbPackage}/$folder ${cfg.dataDir}/$folder
+            fi
+          done
+
+          ${lib.getExe cfg.package}
+        '';
 
         User = cfg.user;
         Group = cfg.group;
