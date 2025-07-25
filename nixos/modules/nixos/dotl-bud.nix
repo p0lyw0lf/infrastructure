@@ -81,6 +81,7 @@ in
               cp -R ${cfg.dbPackage}/$folder ${cfg.dataDir}/$folder
             fi
           done
+          chmod -R +w ${cfg.dataDir}
 
           ${lib.getExe cfg.package}
         '';
