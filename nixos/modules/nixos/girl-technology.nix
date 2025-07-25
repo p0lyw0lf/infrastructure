@@ -14,45 +14,44 @@ in
     ./nginx-wildcard.nix
   ];
 
-  options = with lib; {
-    devbox.girl-technology = {
-      domain = mkOption {
-        type = types.str;
-        default = "girl.technology";
-        description = "The base domain to use for the girl-technology server";
-      };
+  options.devbox.girl-technology = with lib; {
+    enable = mkEnableOption "Whether to enable the girl-technology server";
+    package = mkOption {
+      type = types.package;
+      default = perSystem.girl-technology.girl-technology-server;
+      description = "The package to use for girl-technology. Should be the one included with the girl-technology flake probably";
+    };
 
-      port = mkOption {
-        type = types.int;
-        default = 3001;
-        description = "The port to run the girl-technology server on.";
-      };
+    domain = mkOption {
+      type = types.str;
+      default = "girl.technology";
+      description = "The base domain to use for the girl-technology server";
+    };
 
-      user = mkOption {
-        type = types.str;
-        default = "girl-technology";
-      };
+    port = mkOption {
+      type = types.int;
+      default = 3001;
+      description = "The port to run the girl-technology server on.";
+    };
 
-      group = mkOption {
-        type = types.str;
-        default = "girl-technology";
-      };
+    user = mkOption {
+      type = types.str;
+      default = "girl-technology";
+    };
 
-      package = mkOption {
-        type = types.package;
-        default = perSystem.girl-technology.girl-technology-server;
-        description = "The package to use for girl-technology. Should be the one included with the girl-technology flake probably";
-      };
+    group = mkOption {
+      type = types.str;
+      default = "girl-technology";
+    };
 
-      databaseName = mkOption {
-        type = types.nullOr types.str;
-        default = null;
-        description = "The PostgreSQL database to use as backing storage for the girl-technology server. Defaults to the username.";
-      };
+    databaseName = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "The PostgreSQL database to use as backing storage for the girl-technology server. Defaults to the username.";
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     users = {
       users.${cfg.user} = {
         group = cfg.group;

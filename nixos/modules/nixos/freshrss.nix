@@ -4,6 +4,7 @@ let
 in
 {
   options.devbox.freshrss = with lib; {
+    enable = mkEnableOption "Whether to enable FreshRSS";
     domain = mkOption {
       type = types.str;
       description = "Default domain for FreshRSS";
@@ -11,7 +12,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     sops.secrets.freshrss_password = {
       # Allow the freshrss user to read this file
       mode = "0440";

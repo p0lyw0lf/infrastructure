@@ -21,7 +21,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     users.users."${cfg.user}" = {
       description = "rc.wolfgirl.dev service user";
       isSystemUser = true;

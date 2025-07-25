@@ -6,26 +6,24 @@ let
   wildcardAlias = domain: "~^(?<sub>.+)\\.${lib.strings.escape [ "." ] domain}$";
 in
 {
-  options = with lib; {
-    devbox.nginx.wildcard = {
-      domains = mkOption {
-        type = types.attrsOf (
-          types.submodule {
-            options = {
-              enable = mkEnableOption "Enable wildcard access for the given domain";
-            };
-          }
-        );
-        default = { };
-        example = literalExpression ''
-          {
-            devbox.nginx.wildcard.domains."girl.technology".enable = true;
-          }
-        '';
-      };
+  options.devbox.nginx.wildcard = with lib; {
+    domains = mkOption {
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            enable = mkEnableOption "Enable wildcard access for the given domain";
+          };
+        }
+      );
+      default = { };
+      example = literalExpression ''
+        {
+          devbox.nginx.wildcard.domains."girl.technology".enable = true;
+        }
+      '';
     };
   };
-  config = {
+  config = lib.mkIf (cfg.domains != { }) {
     sops.secrets.porkbun_env = { };
 
     services.nginx.virtualHosts =

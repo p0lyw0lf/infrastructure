@@ -8,14 +8,15 @@ in
   ];
 
   options.devbox.pds = with lib; {
+    enable = mkEnableOption "Whether to enable the Bluesky PDS";
     domain = mkOption {
       type = types.str;
-      description = "Default domain for the BlueSky PDS";
+      description = "Default domain for the Bluesky PDS";
       example = "girl.technology";
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     sops.secrets.pds_env = {
       mode = "0440";
       group = config.users.users.pds.group;

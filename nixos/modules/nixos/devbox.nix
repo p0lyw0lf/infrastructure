@@ -3,11 +3,12 @@
   imports = [
     ./server.nix
 
-    # ./bot-crossposter.nix
+    ./bot-crossposter.nix
+    ./dotl-bud.nix
     ./freshrss.nix
     ./girl-technology.nix
-    ./rc-wolfgirl-dev.nix
     ./pds.nix
+    ./rc-wolfgirl-dev.nix
 
     inputs.srvos.nixosModules.mixins-nginx
   ];

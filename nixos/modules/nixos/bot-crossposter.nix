@@ -12,6 +12,7 @@ in
   imports = [ ./rc-secrets.nix ];
 
   options.devbox.bot-crossposter = with lib; {
+    enable = mkEnableOption "Whether to enable the discord crossposting bot";
     package = mkOption {
       type = types.package;
       default = perSystem.rc-wolfgirl-dev.bot-crossposter;
@@ -19,7 +20,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     systemd.services."bot-crossposter" = {
       description = "Crossposter bot";
       wantedBy = [ "multi-user.target" ];

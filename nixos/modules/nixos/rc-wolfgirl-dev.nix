@@ -11,18 +11,7 @@ in
   imports = [ ./rc-secrets.nix ];
 
   options.devbox.rc-wolfgirl-dev = with lib; {
-    domain = mkOption {
-      type = types.str;
-      default = "rc.wolfgirl.dev";
-      description = "The base domain to use for the RC server";
-    };
-
-    port = mkOption {
-      type = types.int;
-      default = 8000;
-      description = "The port to run the RC server on.";
-    };
-
+    enable = mkEnableOption "Whether to enable the RC server";
     package = mkOption {
       type = types.package;
       default = perSystem.rc-wolfgirl-dev.rc-crossposter;
@@ -34,9 +23,21 @@ in
       default = perSystem.rc-wolfgirl-dev.rc-crossposter-static;
       description = "The package containing the static files for the server.";
     };
+
+    domain = mkOption {
+      type = types.str;
+      default = "rc.wolfgirl.dev";
+      description = "The base domain to use for the RC server";
+    };
+
+    port = mkOption {
+      type = types.int;
+      default = 8000;
+      description = "The port to run the RC server on.";
+    };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     systemd.services."rc.wolfgirl.dev" = {
       description = "Server for https://${cfg.domain}";
       wantedBy = [ "multi-user.target" ];

@@ -10,6 +10,7 @@ let
 in
 {
   options.devbox.dotl-bud = with lib; {
+    enable = mkEnableOption "Whether to enable the DotL Bud bot";
     package = mkOption {
       type = types.package;
       default = perSystem.dotl-bud.dotl-bud-bin;
@@ -39,7 +40,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     users.users."${cfg.user}" = {
       description = "DotL Bud service user";
       isSystemUser = true;
