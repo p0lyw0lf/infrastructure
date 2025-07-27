@@ -1,5 +1,5 @@
-gbox:
-  nixos-rebuild switch --flake .#gbox --target-host gbox
+devbox:
+  nixos-rebuild switch --flake .#devbox --target-host devbox-root
 
 devvm:
   nixos-rebuild build-vm --flake .#devvm && ./result/bin/run-unnamed-vm

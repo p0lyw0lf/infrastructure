@@ -12,5 +12,13 @@
 
   sops.defaultSopsFile = ../secrets.yaml;
 
-  system.stateVersion = "24.05";
+  users.users.polywolf = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIGQYrxiNsD7iofw/Q+Fjp5rkE2V/wA4Y4vAKQ+eAmP/ nixos@nixos-wsl"
+    ];
+    extraGroups = [ "wheel" ];
+  };
+
+  system.stateVersion = "25.05";
 }
