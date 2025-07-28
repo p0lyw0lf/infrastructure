@@ -11,6 +11,7 @@ pkgs.mkShell {
       nix-output-monitor
       nixos-rebuild
       pwgen
+      qemu
       sops
       ssh-to-age
     ]);
