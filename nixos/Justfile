@@ -4,14 +4,21 @@ devbox:
 qemu-firmware:
   ./gen-qemu-firmware.sh
 
-qemu-devvm:
+run-qemu:
   qemu-system-aarch64 -M virt \
-    -cpu max -smp 2 -m 4096 \
+    -cpu max -smp 2 -m 8192 \
+    -object rng-random,filename=/dev/urandom,id=rng0 \
+    -device virtio-rng-pci,rng=rng0 \
+    -device virtio-net-pci,netdev=net0 \
+    -netdev user,id=net0,hostfwd=tcp::8022-:22 \
     -nographic \
     -drive if=pflash,format=raw,file=efi.img,readonly=on \
     -drive if=pflash,format=raw,file=varstore.img \
     -drive if=virtio,format=qcow2,file=devvm.qcow2 \
     -device virtio-scsi-pci,id=scsi0 -device scsi-cd,drive=cd,bootindex=0 -drive if=none,id=cd,file=nixos-minimal-aarch64-linux.iso
+
+switch-qemu:
+  nixos-rebuild switch --flake .#qemu-aarch64 --target-host localhost-qemu
 
 devvm:
   nixos-rebuild build-vm --flake .#devvm && ./result/bin/run-unnamed-vm
