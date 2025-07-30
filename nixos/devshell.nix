@@ -14,6 +14,7 @@ pkgs.mkShell {
       qemu
       sops
       ssh-to-age
+      zstd
     ]);
 
   # Add environment variables

@@ -7,3 +7,4 @@ result-*
 *.qcow2
 *.img
 *.iso
+*.tar.zst
