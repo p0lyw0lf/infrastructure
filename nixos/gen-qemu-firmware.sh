@@ -14,6 +14,6 @@ if [ ! -f efi.img ]; then
   dd if=${efi_fd} of=efi.img conv=notrunc
 fi
 
-if [ ! -f devvm.qcow2 ]; then
-  qemu-img create -f qcow2 devvm.img 40G
+if [ ! -f qemu.qcow2 ]; then
+  qemu-img create -f qcow2 qemu.qcow2 40G
 fi

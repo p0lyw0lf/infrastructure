@@ -1,9 +1,6 @@
 devbox:
   nixos-rebuild switch --flake .#devbox --target-host devbox-root
 
-qemu-firmware:
-  ./gen-qemu-firmware.sh
-
 run-qemu:
   qemu-system-aarch64 -M virt \
     -cpu max -smp 2 -m 8192 \
@@ -18,7 +15,7 @@ run-qemu:
     # -device virtio-scsi-pci,id=scsi0 -device scsi-cd,drive=cd,bootindex=0 -drive if=none,id=cd,file=nixos-minimal-aarch64-linux.iso
 
 switch-qemu:
-  nixos-rebuild switch --flake .#qemu-aarch64 --target-host localhost-qemu
+  nixos-rebuild switch --fast --flake .#qemu-aarch64 --target-host localhost-qemu
 
 devvm:
   nixos-rebuild build-vm --flake .#devvm && ./result/bin/run-unnamed-vm
