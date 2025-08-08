@@ -16,7 +16,12 @@ run-qemu:
     # -device virtio-scsi-pci,id=scsi0 -device scsi-cd,drive=cd,bootindex=0 -drive if=none,id=cd,file=nixos-minimal-aarch64-linux.iso
 
 switch-qemu:
-  nixos-rebuild switch --fast --flake .#qemu-aarch64 --build-host localhost-qemu --target-host localhost-qemu
+  nixos-rebuild switch --flake .#qemu-aarch64 --target-host localhost-qemu |& nom
+
+anywhere-qemu:
+  nix run github:nix-community/nixos-anywhere -- -i ~/.ssh/id_ed25519 --flake .#qemu-aarch64 localhost-qemu \
+    --debug \
+    --kexec "$(nix build --print-out-paths github:nix-community/nixos-images#packages.aarch64-linux.kexec-installer-nixos-stable)/nixos-kexec-installer-aarch64-linux.tar.gz"
 
 devvm:
   nixos-rebuild build-vm --flake .#devvm && ./result/bin/run-unnamed-vm

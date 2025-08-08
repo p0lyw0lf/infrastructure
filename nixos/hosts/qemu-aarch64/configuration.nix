@@ -5,6 +5,8 @@
     ./hardware-configuration.nix
   ];
 
+  disko.devices.disk.disk1.device = "/dev/vda";
+
   devbox.dotl-bud.enable = true;
 
   system.stateVersion = "25.05";

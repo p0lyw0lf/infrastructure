@@ -3,6 +3,7 @@
   imports = [
     inputs.sops-nix.nixosModules.default
     inputs.srvos.nixosModules.server
+    ./disk-config.nix
   ];
 
   users.users.root.openssh.authorizedKeys.keys = [

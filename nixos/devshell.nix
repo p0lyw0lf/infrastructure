@@ -9,6 +9,7 @@ pkgs.mkShell {
       age
       just
       nix-output-monitor
+      nixos-anywhere
       nixos-rebuild
       pwgen
       qemu
