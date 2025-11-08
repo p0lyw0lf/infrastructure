@@ -1,0 +1,17 @@
+[Unit]
+Description=Navidrome via Podman Compose
+Requires=podman.service
+After=podman.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/me/infrastructure/navidrome
+# Shutdown container if already running on start
+ExecStartPre=/bin/podman-compose -f docker-compose.yml down
+# Start container when service is started
+ExecStart=/bin/podman-compose -f docker-compose.yml up
+# Stop container when service is stopped
+ExecStop=/bin/podman-compose -f docker-compose.yml down
+
+[Install]
+WantedBy=default.target
