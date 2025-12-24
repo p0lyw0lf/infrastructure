@@ -1,5 +1,5 @@
 upstream navidrome {
-	server 127.0.0.1:4533;
+	server mammal:4533;
 	keepalive 64;
 }
 
