@@ -1,0 +1,18 @@
+# Just as reference; the actual logic is stored in ./factorio.container
+services:
+  factorio:
+    container_name: factorio
+    image: factoriotools/factorio:stable
+    restart: unless-stopped
+    ports:
+      - "34197:34197/udp"
+      - "27015:27015/tcp"
+    volumes:
+      - ./data:/factorio
+    environment:
+      - UPDATE_MODS_ON_START=true
+      # Uncomment to skip updating specific mods
+      # - UPDATE_IGNORE=mod1,mod2,mod3
+    labels: 
+      # Allows auto-update via podman
+      - io.containers.autoupdate=registry

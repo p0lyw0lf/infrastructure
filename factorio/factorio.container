@@ -1,0 +1,19 @@
+# Link to ~/.config/containers/systemd/factorio.container
+[Unit]
+Description=Factorio server
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=docker.io/factoriotools/factorio:stable-rootless
+PublishPort=34197:34197/udp
+PublishPort=27015:27015/tcp
+Volume=/opt/factorio:/factorio
+Environment=UPDATE_MODS_ON_START=true
+AutoUpdate=registry
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
