@@ -9,7 +9,8 @@ WantedBy=default.target
 [Service]
 Type=simple
 Restart=always
-RestartSec=1
+RestartSec=10
 WorkingDirectory=/home/ubuntu/crossposter
 Environment="SANIC_PROXY_SECRET=_rc.wolfgirl.dev"
+Environment="RC_DRAFTS_DIR=/var/opt/syncthing/Notes"
 ExecStart=/home/ubuntu/crossposter/run_server.sh
