@@ -1,0 +1,8 @@
+[Unit]
+Description=Backup with rsync
+After=tailscaled.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/infrastructure
+ExecStart=/home/ubuntu/infrastructure/backup.sh
