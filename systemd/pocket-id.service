@@ -1,0 +1,20 @@
+[Unit]
+Description=PocketID via Docker Compose
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+User=root
+Group=docker
+TimeoutStopSec=15
+WorkingDirectory=/home/ubuntu/infrastructure/pocket-id
+# Shutdown container if already running on start
+ExecStartPre=/usr/bin/docker compose -f docker-compose.yml down
+# Start container when service is started
+ExecStart=/home/ubuntu/infrastructure/with_secret_env.sh secret.env -- /usr/bin/docker compose -f docker-compose.yml up
+# Stop container when service is stopped
+ExecStop=/usr/bin/docker compose -f docker-compose.yml down
+
+[Install]
+WantedBy=multi-user.target
