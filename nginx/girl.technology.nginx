@@ -16,7 +16,7 @@ server {
 	ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
 
-	location ~ ^(/xrpc|/.well-known/atproto-did) {
+	location ~ ^(/xrpc|/oauth|/@atproto|/.well-known/(atproto-did$|oauth-protected-resource$|oauth-authorization-server$)) {
 		include proxy_params;
 		proxy_http_version 1.1;
 		proxy_set_header Upgrade $http_upgrade;
