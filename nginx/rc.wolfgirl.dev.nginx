@@ -1,6 +1,6 @@
 upstream rc_wolfgirl_dev {
-  keepalive 300;
-  server 127.0.0.1:8000;
+	keepalive 300;
+	server 127.0.0.1:8000;
 }
 
 server {
@@ -28,6 +28,9 @@ server {
 		proxy_set_header	Upgrade $http_upgrade;
 		# Allow uploading large files
 		client_max_body_size	100M;
+		# Don't time out so much
+		proxy_read_timeout	300s;
+		proxy_send_timeout	300s;
 	}
 
 	# Just for authentication with ngx_http_auth_request_module
