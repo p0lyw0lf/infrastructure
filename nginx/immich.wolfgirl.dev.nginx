@@ -1,3 +1,5 @@
+# Immich MUST be served from the root of a domain, so we make a domain for it.
+
 server {
 	server_name immich.wolfgirl.dev;
 
@@ -36,6 +38,12 @@ server {
 		proxy_pass http://mammal:2283;
 		proxy_set_header   Upgrade    $http_upgrade;
 		proxy_set_header   Connection "upgrade";
+	}
+
+	# To not get included in normal search results
+	location = /robots.txt {
+		add_header	Content-Type text/plain;
+		return 200 "User-agent: *\nDisallow: /\n";
 	}
 }
 
