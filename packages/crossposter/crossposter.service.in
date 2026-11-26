@@ -10,5 +10,5 @@ WantedBy=default.target
 Type=simple
 Restart=always
 RestartSec=1
-WorkingDirectory=/home/ubuntu/crossposter
-ExecStart=/home/ubuntu/crossposter/run_bot.sh
+WorkingDirectory=@crossposter@
+ExecStart=@crossposter@/run_bot.sh
