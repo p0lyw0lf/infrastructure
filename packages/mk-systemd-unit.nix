@@ -28,7 +28,7 @@ stdenvNoCC.mkDerivation {
     substitute ${serviceTemplateFile} $out/${pname}.service \
       --subst-var-by "${pname}" "${package}" \
       ${builtins.concatStringsSep "\n" (
-        map (var: "--subst-var-by \"{var}\" \"${subst.${var}}\" \\") (builtins.attrNames subst)
+        map (var: "--subst-var-by \"${var}\" \"${subst.${var}}\" \\") (builtins.attrNames subst)
       )}
 
     cat <<EOF >> $out/${pname}.service
