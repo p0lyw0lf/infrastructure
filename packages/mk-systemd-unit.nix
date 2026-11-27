@@ -20,9 +20,9 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    ${pname}=${package}
+    mkdir $out
     substitute ${serviceTemplateFile} $out/${pname}.service \
-      --subst-var ${pname}
+      --subst-var-by ${pname} ${package}
 
     runHook postInstall
   '';

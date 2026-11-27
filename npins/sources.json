@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "bffabd033ac735aa16020b68abd6ab28b6ea72d5",
-      "url": "https://github.com/p0lyw0lf/crossposter/archive/bffabd033ac735aa16020b68abd6ab28b6ea72d5.tar.gz",
-      "hash": "sha256-B0h75BvuRzCW5YAxAWXmQDWbL4W2nhkxFf+9YMNFzB4="
+      "revision": "5f98aa49079ed7e176fac214e13e03fdce13da56",
+      "url": "https://github.com/p0lyw0lf/crossposter/archive/5f98aa49079ed7e176fac214e13e03fdce13da56.tar.gz",
+      "hash": "sha256-MBjX4WiUbnGSIJUba+U3Ipl3f8SOmBlVIesb0TbDIKw="
     },
     "nixpkgs": {
       "type": "Channel",

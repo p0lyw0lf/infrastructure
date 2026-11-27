@@ -11,4 +11,4 @@ Type=simple
 Restart=always
 RestartSec=1
 WorkingDirectory=@crossposter@
-ExecStart=@crossposter@/run_bot.sh
+ExecStart=@crossposter@/bin/bot-crossposter

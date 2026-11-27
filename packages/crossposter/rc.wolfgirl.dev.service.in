@@ -10,8 +10,8 @@ WantedBy=default.target
 Type=simple
 Restart=always
 RestartSec=10
-WorkingDirectory=@crossposter@
-ExecStart=@crossposter@/run_server.sh
+WorkingDirectory=@rc-wolfgirl-dev@
+ExecStart=@rc-wolfgirl-dev@/bin/rc-crossposter
 # TODO: configure these variables in Nix?
 Environment="SANIC_PROXY_SECRET=_rc.wolfgirl.dev"
 Environment="RC_DRAFTS_DIR=/var/opt/syncthing/Notes"

@@ -15,6 +15,7 @@ pkgs.stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
+    mkdir $out
     ${pkgs.lib.concatStrings (
       map (unit: ''
         cp ${unit}/*.service $out
