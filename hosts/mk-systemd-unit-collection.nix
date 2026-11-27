@@ -2,7 +2,7 @@ units:
 { pkgs, ... }@inp:
 let
   units-of = unit: builtins.attrValues (import unit inp);
-  all-units = builtins.concatLists (map units-of units);
+  all-units = builtins.concatMap units-of units;
 in
 pkgs.stdenvNoCC.mkDerivation {
   pname = "systemd-units";

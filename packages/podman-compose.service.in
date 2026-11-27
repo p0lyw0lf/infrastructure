@@ -1,0 +1,16 @@
+[Unit]
+Description=@description@
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Restart=always
+TimeoutStopSec=15
+# Shutdown container if already running on start
+ExecStartPre=@podman-compose@ -f @composeFile@ down
+# Start container when service is started
+ExecStart=@withSecretEnv@ @secretEnv@ -- @podman-compose@ -f @composeFile@ up
+# Stop container when service is stopped
+ExecStop=@podman-compose@ -f @composeFile@ down
