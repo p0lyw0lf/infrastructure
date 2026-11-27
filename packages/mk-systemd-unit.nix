@@ -5,6 +5,8 @@
   package,
   # The template file that create the service. Every instance of `@pname@` will be replace with the directory of `package`.
   serviceTemplateFile,
+  # Any extra environment variables. These will be appended to the end of the file.
+  environment ? { },
 }:
 { stdenvNoCC }:
 
@@ -23,6 +25,12 @@ stdenvNoCC.mkDerivation {
     mkdir $out
     substitute ${serviceTemplateFile} $out/${pname}.service \
       --subst-var-by ${pname} ${package}
+
+    cat <<EOF >> $out/${pname}.service
+    ${builtins.concatStringsSep "\n" (
+      map (var: "Environment=\"${var}=${environment.${var}}\"") (builtins.attrNames environment)
+    )}
+    EOF
 
     runHook postInstall
   '';

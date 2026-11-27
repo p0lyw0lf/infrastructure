@@ -13,6 +13,19 @@
       "url": "https://github.com/p0lyw0lf/crossposter/archive/5f98aa49079ed7e176fac214e13e03fdce13da56.tar.gz",
       "hash": "sha256-MBjX4WiUbnGSIJUba+U3Ipl3f8SOmBlVIesb0TbDIKw="
     },
+    "girl-technology": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "p0lyw0lf",
+        "repo": "girl.technology"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "4b6687e3688dd0169ffaed4eee600f3ad8446b0d",
+      "url": "https://github.com/p0lyw0lf/girl.technology/archive/4b6687e3688dd0169ffaed4eee600f3ad8446b0d.tar.gz",
+      "hash": "sha256-3araVsDhyvmO6KKxtJhJidJn4xSjZ6Sd6rOTfntH0f4="
+    },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",

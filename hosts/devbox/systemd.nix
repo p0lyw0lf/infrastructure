@@ -4,6 +4,7 @@ let
   all-units = builtins.concatLists (
     map units [
       ../../packages/crossposter
+      ../../packages/girl-technology
       ../../packages/pds
     ]
   );

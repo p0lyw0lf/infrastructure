@@ -10,5 +10,5 @@ WantedBy=default.target
 Type=simple
 Restart=always
 RestartSec=1
-WorkingDirectory=/home/ubuntu/girl.technology
-ExecStart=/home/ubuntu/girl.technology/prod_run.sh
+WorkingDirectory=@girl-technology@
+ExecStart=@girl-technology@/bin/girl_technology_server
