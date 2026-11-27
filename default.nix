@@ -4,7 +4,5 @@ let
   crossposter = import sources.crossposter { inherit pkgs; };
 in
 {
-  packages = {
-    systemd = import ./systemd { inherit pkgs crossposter; };
-  };
+  devbox = import ./hosts/devbox { inherit pkgs crossposter; };
 }

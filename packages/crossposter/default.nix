@@ -1,4 +1,4 @@
-{ pkgs, crossposter }:
+{ pkgs, crossposter, ... }:
 {
   crossposter = pkgs.callPackage (import ../mk-systemd-unit.nix {
     pname = "crossposter";

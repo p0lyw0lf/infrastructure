@@ -1,7 +1,12 @@
-{ pkgs, crossposter }:
+{ pkgs, ... }@inp:
 let
-  crossposter-units = import ../packages/crossposter { inherit pkgs crossposter; };
-  all-units = builtins.attrValues crossposter-units;
+  units = file: builtins.attrValues (import file inp);
+  all-units = builtins.concatLists (
+    map units [
+      ../../packages/crossposter
+      ../../packages/pds
+    ]
+  );
 in
 pkgs.stdenvNoCC.mkDerivation {
   pname = "systemd-units";

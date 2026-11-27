@@ -3,15 +3,15 @@ Description=Bluesky PDS Service
 Documentation=https://github.com/p0lyw0lf/pds
 After=network.target
 
+[Install]
+WantedBy=default.target
+
 [Service]
 Type=simple
 WorkingDirectory=/pds
+ExecStart=@pds@/bin/pds
+EnvironmentFile=/pds/pds.env
 Environment="PDS_PORT=3000"
 Environment="NODE_ENV=production"
 # potential perf issues w/ io_uring on this version of node
 Environment="UV_USE_IO_URING=0"
-EnvironmentFile=/pds/pds.env
-ExecStart=/home/ubuntu/.nvm/versions/node/v24.19.0/bin/node --enable-source-maps /home/ubuntu/pds/service/index.ts
-
-[Install]
-WantedBy=default.target
