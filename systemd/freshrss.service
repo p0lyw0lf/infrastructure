@@ -12,7 +12,7 @@ WorkingDirectory=/home/ubuntu/infrastructure/freshrss
 # Shutdown container if already running on start
 ExecStartPre=/usr/bin/docker compose -f docker-compose.yml down
 # Start container when service is started
-ExecStart=/usr/bin/docker compose -f docker-compose.yml up
+ExecStart=/home/ubuntu/infrastructure/with_secret_env.sh secret.env -- /usr/bin/docker compose -f docker-compose.yml up
 # Stop container when service is stopped
 ExecStop=/usr/bin/docker compose -f docker-compose.yml down
 
